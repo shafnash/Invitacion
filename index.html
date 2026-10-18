@@ -68,14 +68,20 @@
   .marco{ position:relative; z-index:1; width:100%; max-width:470px; display:flex; flex-direction:column; align-items:center }
 
   /* ---------- Apertura ---------- */
+  .intro{
+    width:100%;
+    display:flex; flex-direction:column; align-items:center;
+    overflow:hidden;
+    transition: opacity .6s ease, transform .8s cubic-bezier(.4,0,.6,1), height .8s cubic-bezier(.4,0,.6,1);
+  }
+  .retirado .intro{ opacity:0; transform: translateY(-20px) scale(.95) }
+
   .apertura{
     text-align:center;
     display:flex; flex-direction:column; align-items:center;
-    transition: opacity .7s ease, transform .7s ease;
     animation: entrar 1s cubic-bezier(.22,1,.36,1) both;
   }
   @keyframes entrar{ from{ opacity:0; transform: translateY(18px) } }
-  .retirado .apertura{ opacity:0; transform: translateY(-16px) }
 
   .ceja{
     font-family: var(--f-display);
@@ -109,10 +115,7 @@
   /* ---------- Laptop ---------- */
   .caja-equipo{
     width:100%; display:flex; flex-direction:column; align-items:center;
-    overflow:hidden;
-    transition: opacity .7s ease, transform .8s cubic-bezier(.4,0,.6,1), height .8s cubic-bezier(.4,0,.6,1);
   }
-  .retirado .caja-equipo{ opacity:0; transform: translateY(-22px) scale(.93) }
 
   .equipo{
     width: min(372px, 94vw);
@@ -508,6 +511,7 @@
 
 <div class="marco" id="marco">
 
+  <div class="intro" id="intro">
   <div class="apertura">
     <p class="ceja">Una invitación para ti</p>
     <p class="frase">Hay días que una familia espera durante años. Este es uno de ellos.</p>
@@ -563,6 +567,7 @@
       <div class="base" aria-hidden="true"></div>
     </div>
     <p class="pie-equipo">Toca el botón para abrir el correo</p>
+  </div>
   </div>
 
   <div class="zona">
@@ -680,12 +685,12 @@
 
   const marco = document.getElementById('marco');
   const btnAbrir = document.getElementById('abrir');
-  const cajaEquipo = document.getElementById('cajaEquipo');
+  const intro = document.getElementById('intro');
   const rollo = document.getElementById('rollo');
   const pergamino = document.getElementById('pergamino');
   const btnCerrar = document.getElementById('cerrar');
   let abierto = false;
-  let altoEquipo = 0;
+  let altoIntro = 0;
   let relojes = [];
 
   function programar(fn, ms){ relojes.push(setTimeout(fn, ms)); }
@@ -705,11 +710,11 @@
     btnAbrir.disabled = true;
 
     programar(function(){
-      altoEquipo = cajaEquipo.offsetHeight;
-      cajaEquipo.style.height = altoEquipo + 'px';
-      void cajaEquipo.offsetWidth;
+      altoIntro = intro.offsetHeight;
+      intro.style.height = altoIntro + 'px';
+      void intro.offsetWidth;
       marco.classList.add('retirado');
-      cajaEquipo.style.height = '0px';
+      intro.style.height = '0px';
     }, 850);
 
     programar(function(){
@@ -721,10 +726,10 @@
     programar(function(){ marco.classList.add('coronado'); }, 1850);
 
     programar(function(){
-      if (typeof rollo.scrollIntoView === 'function') {
-        rollo.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      if (typeof window.scrollTo === 'function') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-    }, 2900);
+    }, 2600);
   }
 
   function cerrar(){
@@ -744,13 +749,13 @@
     rollo.style.height = '0px';
 
     programar(function(){
-      cajaEquipo.style.height = altoEquipo + 'px';
+      intro.style.height = altoIntro + 'px';
       marco.classList.remove('retirado');
     }, 700);
 
     programar(function(){
       marco.classList.remove('abriendo');
-      cajaEquipo.style.height = '';
+      intro.style.height = '';
       btnAbrir.disabled = false;
       reiniciarRegalo();
     }, 1300);
@@ -794,3 +799,4 @@
     }).observe(pergamino);
   }
 </script>
+
