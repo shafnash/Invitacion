@@ -1,0 +1,796 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cena de graduación de Naomi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@400;500;600&display=swap">
+<style>
+  /* Columna centrada: mensaje de la familia, laptop con el correo, y la invitación que sale de la pantalla */
+  :root{
+    background:#12060a;
+    color-scheme: dark;
+    -webkit-text-size-adjust:100%; text-size-adjust:100%;
+    --noche:#2a0c14;
+    --noche-2:#12060a;
+    --vino:#5e1322;
+    --vino-2:#43101c;
+    --rojo:#991f2b;
+    --rojo-2:#7a1622;
+    --rojo-claro:#c0434d;
+    --crema:#f4efe2;
+    --crema-2:#e8e0cd;
+    --crema-3:#d8cdb4;
+    --pergamino:#faf4e6;
+    --pergamino-2:#f0e7d2;
+    --tinta:#3b2219;
+    --tinta-2:#7d5a44;
+    --oro:#c9a35c;
+    --oro-claro:#eccf93;
+    --oro-oscuro:#94702f;
+    --f-script:'Pinyon Script','Snell Roundhand',cursive;
+    --f-display:'Cinzel','Trajan Pro',Georgia,serif;
+    --f-body:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+    --f-ui:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  }
+
+  body{
+    background:
+      radial-gradient(700px 460px at 50% -4%, #5c1424 0%, var(--noche) 54%, var(--noche-2) 100%)
+      var(--noche-2) no-repeat fixed;
+    color: var(--crema);
+    font-family: var(--f-body);
+    min-height: 100vh;
+    min-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+    padding-block: clamp(22px, 4vh, 46px);
+    padding-left: clamp(16px, 4vw, 26px);
+    padding-right: clamp(16px, 4vw, 26px);
+    display: flex;
+    justify-content: center;
+    align-items: safe center;
+    overflow-x: hidden;
+  }
+
+  .textura{
+    position:absolute; inset:0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+    background-size: 120px 120px;
+    opacity:.5;
+    mix-blend-mode: multiply;
+    pointer-events:none;
+  }
+
+  #motas{ position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden }
+  .mota{ position:absolute; width:3px; height:3px; border-radius:50%; background:var(--oro-claro); opacity:0; animation: subir linear infinite }
+  @keyframes subir{
+    0%{ transform: translateY(0) scale(.6); opacity:0 }
+    18%{ opacity:.5 } 80%{ opacity:.3 }
+    100%{ transform: translateY(-80vh) scale(1.1); opacity:0 }
+  }
+
+  .marco{ position:relative; z-index:1; width:100%; max-width:470px; display:flex; flex-direction:column; align-items:center }
+
+  /* ---------- Apertura ---------- */
+  .apertura{
+    text-align:center;
+    display:flex; flex-direction:column; align-items:center;
+    transition: opacity .7s ease, transform .7s ease;
+    animation: entrar 1s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes entrar{ from{ opacity:0; transform: translateY(18px) } }
+  .retirado .apertura{ opacity:0; transform: translateY(-16px) }
+
+  .ceja{
+    font-family: var(--f-display);
+    font-size: clamp(9.5px, 2.7vw, 11px); font-weight:500;
+    letter-spacing:.34em; text-transform:uppercase;
+    color: var(--oro); margin:0;
+  }
+  .frase{
+    font-size: clamp(19px, 5.4vw, 23px);
+    font-weight:300; font-style:italic; line-height:1.5;
+    color: rgba(244,239,226,.9);
+    max-width: 24ch; margin: 16px auto 0;
+    text-wrap: balance;
+  }
+  .anfitriona{
+    font-family: var(--f-display);
+    font-size: clamp(13px, 3.6vw, 15px); font-weight:500;
+    letter-spacing:.07em; line-height:1.6;
+    color: var(--crema); margin: 20px 0 0;
+    text-wrap: balance;
+  }
+  .anfitriona b{ color: var(--oro-claro); font-weight:500; white-space:nowrap }
+  .subfrase{
+    font-size: clamp(16px, 4.4vw, 18px);
+    font-weight:300; font-style:italic;
+    color: rgba(244,239,226,.68);
+    margin: 8px 0 0;
+  }
+  .filete{ width:1px; height:30px; background:linear-gradient(var(--oro), transparent); margin-top:20px }
+
+  /* ---------- Laptop ---------- */
+  .caja-equipo{
+    width:100%; display:flex; flex-direction:column; align-items:center;
+    overflow:hidden;
+    transition: opacity .7s ease, transform .8s cubic-bezier(.4,0,.6,1), height .8s cubic-bezier(.4,0,.6,1);
+  }
+  .retirado .caja-equipo{ opacity:0; transform: translateY(-22px) scale(.93) }
+
+  .equipo{
+    width: min(372px, 94vw);
+    margin-top: 20px;
+    animation: llegar 1s cubic-bezier(.22,1,.36,1) .15s both;
+  }
+  @keyframes llegar{ from{ opacity:0; transform: translateY(26px) scale(.95) } }
+
+  .tapa{
+    background: linear-gradient(170deg, #f2eee6, #ded8cc);
+    border-radius: 12px 12px 4px 4px;
+    padding: 8px 8px 11px;
+    box-shadow: 0 18px 34px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.7);
+  }
+  .camara{
+    width:4px; height:4px; border-radius:50%;
+    background:#b8b1a4; margin: 0 auto 7px;
+  }
+  .pantalla{
+    position:relative;
+    background:#fff;
+    border-radius: 3px;
+    overflow:hidden;
+    text-align:left;
+    color: var(--tinta);
+    font-family: var(--f-body);
+  }
+  .barra{
+    display:flex; align-items:center; gap:6px;
+    background:#fff;
+    padding:9px 12px;
+    border-bottom:1px solid rgba(59,34,25,.1);
+  }
+  .punto{ width:6px; height:6px; border-radius:50%; background:#ded8ce }
+  .punto.r{ background:#e3ccc9 } .punto.a{ background:#e5dac4 } .punto.v{ background:#d4dcd2 }
+  .barra span{
+    margin-left:5px;
+    font-family: var(--f-display);
+    font-size:8.5px; font-weight:500; color:#a2978a;
+    letter-spacing:.2em; text-transform:uppercase;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+
+  .bandeja{ padding: 16px clamp(14px, 4vw, 20px) clamp(14px, 4vw, 18px) }
+  .bandeja-tope{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:10px; margin-bottom:14px;
+  }
+  .bandeja-tope strong{
+    font-family: var(--f-display);
+    font-size:9px; font-weight:500; color:#a2978a;
+    letter-spacing:.26em; text-transform:uppercase;
+  }
+  .insignia{
+    display:inline-flex; align-items:center; gap:6px;
+    color: var(--rojo); background:none;
+    font-family: var(--f-display);
+    font-size:8.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase;
+  }
+  .insignia i{
+    width:6px; height:6px; border-radius:50%; background:var(--rojo); font-style:normal;
+    animation: pulso 2.4s ease-in-out infinite;
+  }
+  @keyframes pulso{ 0%,100%{ box-shadow:0 0 0 0 rgba(153,31,43,.45) } 60%{ box-shadow:0 0 0 6px rgba(153,31,43,0) } }
+
+  .correo{
+    background:none; border:0; border-radius:0;
+    padding: 0;
+    box-shadow:none;
+  }
+  .remitente{
+    display:flex; align-items:center; gap:10px; margin-bottom:11px;
+    padding-bottom:11px; border-bottom:1px solid rgba(59,34,25,.09);
+  }
+  .avatar{
+    width:30px; height:30px; border-radius:50%; flex:none;
+    background:#fff; border:1px solid rgba(94,19,34,.3);
+    color:var(--vino); font-family:var(--f-display); font-size:10px; font-weight:500; letter-spacing:.06em;
+    display:grid; place-items:center;
+  }
+  .remitente div{ min-width:0 }
+  .remitente b{
+    display:block;
+    font-family: var(--f-display);
+    font-size: clamp(10.5px, 2.9vw, 12px); font-weight:500;
+    letter-spacing:.04em; color:var(--vino); line-height:1.35;
+  }
+  .remitente small{ display:block; font-size:12px; font-style:italic; color:var(--tinta-2); line-height:1.5 }
+  .asunto{
+    font-family: var(--f-body);
+    font-size: clamp(16px, 4.3vw, 18px); font-weight:500; color:var(--tinta);
+    margin:0 0 5px; line-height:1.4;
+  }
+  .vista{
+    font-size: clamp(14px, 3.7vw, 15.5px); font-weight:300; font-style:italic;
+    color:var(--tinta-2); margin:0; line-height:1.55;
+  }
+  .adjunto{
+    display:inline-flex; align-items:center; gap:6px;
+    margin-top:12px; padding:0;
+    background:none; border:0;
+    font-family: var(--f-display);
+    font-size:8.5px; color:#a2978a; font-weight:500;
+    letter-spacing:.14em; text-transform:uppercase;
+  }
+  .adjunto svg{ width:11px; height:11px; flex:none }
+
+  .cta-zona{ padding: 0 clamp(14px, 4vw, 20px) clamp(16px, 4vw, 20px) }
+  .abrir{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    width:100%;
+    font-family: var(--f-display);
+    font-size: clamp(10.5px, 2.9vw, 12px); font-weight:500;
+    letter-spacing:.2em; text-transform:uppercase;
+    color:var(--pergamino);
+    background: linear-gradient(var(--rojo), var(--vino));
+    border:1px solid var(--oro); border-radius:3px;
+    padding: 16px 18px;
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 7px 18px rgba(94,19,34,.4);
+    transition: transform .18s ease, box-shadow .18s ease, opacity .3s ease;
+    animation: respirar 2.8s ease-in-out 1.2s infinite;
+  }
+  @keyframes respirar{ 0%,100%{ transform: scale(1) } 50%{ transform: scale(1.025) } }
+  .abrir svg{ width:17px; height:17px; flex:none }
+  @media (hover: hover){ .abrir:hover{ box-shadow: 0 11px 22px rgba(94,19,34,.5) } }
+  .abrir:active{ transform: scale(.985) }
+  .abrir:focus-visible{ outline:2px solid var(--oro); outline-offset:3px }
+  .abriendo .abrir{ opacity:.45; animation:none }
+
+  .base{
+    height: 11px;
+    background: linear-gradient(#e7e2d8, #cbc4b6);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 14px 22px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.6);
+    position:relative;
+  }
+  .base::after{
+    content:""; position:absolute; left:50%; top:3px;
+    width:52px; height:3px; margin-left:-26px;
+    background: rgba(90,78,62,.22); border-radius:0 0 4px 4px;
+  }
+  .pie-equipo{
+    font-size: clamp(15px, 4vw, 17px); font-style:italic; font-weight:300;
+    color: rgba(244,239,226,.62);
+    margin: 16px 0 0; text-align:center;
+  }
+  .retirado .pie-equipo{ opacity:0 }
+
+  /* el correo sale volando de la pantalla */
+  .volador{
+    position:fixed; left:50%; top:50%;
+    width:46px; height:32px; margin:-16px 0 0 -23px;
+    z-index:40; opacity:0; pointer-events:none;
+  }
+  .volador span{
+    position:absolute; inset:0;
+    background: linear-gradient(170deg, var(--crema), var(--crema-3));
+    border:1px solid rgba(94,19,34,.4); border-radius:3px;
+    box-shadow: 0 6px 16px rgba(0,0,0,.4);
+  }
+  .volador span::after{
+    content:""; position:absolute; left:0; right:0; top:0; height:0;
+    border-left:23px solid transparent; border-right:23px solid transparent;
+    border-top:15px solid rgba(94,19,34,.18);
+  }
+  .abriendo .volador{ animation: despegar 1.15s cubic-bezier(.3,.05,.3,1) both }
+  @keyframes despegar{
+    0%{ opacity:0; transform: translateY(40px) scale(.5) rotate(-6deg) }
+    22%{ opacity:1; transform: translateY(0) scale(1) rotate(0) }
+    100%{ opacity:0; transform: translateY(-120px) scale(1.5) rotate(8deg) }
+  }
+
+  /* ---------- Invitación ---------- */
+  .zona{
+    position:relative; width:100%;
+    display:flex; flex-direction:column; align-items:center;
+    padding-top:0;
+    transition: padding-top .6s ease;
+  }
+  .desenrollado .zona{ padding-top:58px }
+
+  .birrete{
+    position:absolute; top:0; left:50%;
+    width:min(186px, 46vw); translate:-50% 0;
+    opacity:0;
+    transform: translateY(-130px) rotate(-20deg) scale(.82);
+    transition: transform 1s cubic-bezier(.16,1.24,.4,1), opacity .4s ease;
+    z-index:6; pointer-events:none;
+  }
+  .coronado .birrete{ opacity:1; transform: translateY(-32px) rotate(-6deg) scale(1) }
+  .birrete svg{ display:block; width:100%; height:auto; overflow:visible; filter: drop-shadow(0 10px 14px rgba(0,0,0,.5)) }
+  .borla{ transform-box: fill-box; transform-origin: 6% 2% }
+  .coronado .borla{ animation: colgar 3.6s cubic-bezier(.36,.07,.19,.97) .9s infinite }
+  @keyframes colgar{ 0%,100%{transform:rotate(-2deg)} 30%{transform:rotate(10deg)} 65%{transform:rotate(-6deg)} }
+
+  .rollo{
+    position:relative; width:100%;
+    height:0; overflow:hidden; z-index:2;
+    transition: height 1.4s cubic-bezier(.22,1,.36,1);
+  }
+  .pergamino{
+    position:relative;
+    background:#fff;
+    color: var(--tinta);
+    padding: clamp(30px, 8vw, 40px) clamp(20px, 6vw, 32px) clamp(38px, 10vw, 48px);
+    box-shadow:
+      inset 0 20px 24px -22px rgba(59,34,25,.3),
+      0 28px 52px rgba(0,0,0,.5);
+    text-align:center;
+  }
+  .pergamino > *{ position:relative; z-index:1 }
+  .pergamino > *:not(.textura){
+    opacity:0; transform: translateY(12px);
+    transition: opacity .75s ease, transform .75s cubic-bezier(.22,1,.36,1);
+  }
+  .desenrollado .pergamino > *:not(.textura){
+    opacity:1; transform:none;
+    transition-delay: calc(.5s + var(--i, 0) * .1s);
+  }
+
+  .de-parte{
+    font-family: var(--f-display);
+    font-size: clamp(11px, 3vw, 12.5px); font-weight:500;
+    letter-spacing:.1em; line-height:1.7;
+    color: var(--vino); margin:0 0 4px;
+    text-wrap: balance;
+  }
+  .invita{ font-style:italic; font-weight:300; font-size:clamp(16px, 4.3vw, 18px); color:var(--tinta-2); margin:0 0 6px }
+  h1{
+    font-family: var(--f-script); font-weight:400;
+    font-size: clamp(50px, 15vw, 66px); line-height:1.02;
+    color: var(--vino); text-wrap:balance; margin:0;
+  }
+  .flor{ display:block; width:168px; max-width:70%; height:auto; margin:14px auto 18px; color:var(--oro-oscuro) }
+  .flor path{ stroke:currentColor; fill:none; stroke-width:1.1 }
+  .flor circle{ fill:currentColor }
+  .flor .trazo{ stroke-dasharray:240; stroke-dashoffset:240; transition: stroke-dashoffset 1.6s ease }
+  .desenrollado .flor .trazo{ stroke-dashoffset:0; transition-delay:.9s }
+
+  .nombre{
+    font-family: var(--f-display); font-weight:500;
+    font-size: clamp(15px,4.6vw,18px); letter-spacing:.12em;
+    text-transform:uppercase; line-height:1.5; margin:0;
+  }
+  .carrera{ font-style:italic; font-size:clamp(16px, 4.4vw, 19px); color:var(--rojo); margin:6px 0 22px }
+  .cuerpo-texto{
+    font-size:clamp(17px, 4.7vw, 20px); font-weight:300; line-height:1.66;
+    color:var(--tinta-2); max-width:30ch; margin:0 auto 26px;
+  }
+
+  .datos{
+    display:grid; gap:1px;
+    background: rgba(94,19,34,.14);
+    border-block: 1px solid rgba(94,19,34,.16);
+    margin:0 0 22px; text-align:left;
+  }
+  .dato{
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+    background:#fff;
+    padding:14px 4px;
+  }
+  .dato dt{
+    font-family:var(--f-display); font-size:clamp(9.5px, 2.6vw, 11px); font-weight:500;
+    letter-spacing:.24em; text-transform:uppercase; color:var(--rojo);
+    padding-top:3px; min-width:0;
+  }
+  .dato dd{ margin:0; font-size:clamp(17px, 4.6vw, 20px); font-weight:500; text-align:right; min-width:0; font-variant-numeric:tabular-nums }
+
+  .bloque{
+    border:1px solid rgba(94,19,34,.18);
+    padding:22px 18px;
+    margin:0 0 22px;
+  }
+  .bloque h2{
+    font-family:var(--f-display); font-size:clamp(10px, 2.8vw, 11.5px); font-weight:500;
+    letter-spacing:.28em; text-transform:uppercase; color:var(--rojo);
+    margin:0 0 10px;
+  }
+  .bloque p{ font-size:clamp(16px, 4.4vw, 19px); font-weight:300; font-style:italic; line-height:1.6; color:var(--tinta-2); margin:0 auto; max-width:30ch }
+
+  .pin{ display:block; width:26px; height:auto; margin:0 auto 10px; color:var(--rojo) }
+
+  .boton{
+    display:inline-block;
+    font-family:var(--f-display); font-size:clamp(10.5px, 2.9vw, 12px); font-weight:500;
+    letter-spacing:.2em; text-transform:uppercase;
+    color:var(--pergamino);
+    background: linear-gradient(var(--rojo), var(--vino));
+    border:1px solid var(--oro);
+    padding:15px clamp(18px, 5vw, 26px);
+    text-decoration:none; cursor:pointer;
+    box-shadow: 0 8px 16px rgba(94,19,34,.35);
+    transition: transform .2s ease, box-shadow .2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media (hover: hover){ .boton:hover{ transform:translateY(-2px); box-shadow:0 12px 20px rgba(94,19,34,.42) } }
+  .boton:active{ transform:translateY(0) }
+  .boton.fantasma{ background:none; color:var(--vino); border:1px solid rgba(94,19,34,.4); box-shadow:none }
+  @media (hover: hover){ .boton.fantasma:hover{ background:rgba(94,19,34,.06); transform:translateY(-2px) } }
+  .mapa-boton{ margin-top:12px }
+
+  .regalo-escena{
+    position:relative;
+    height:0; overflow:hidden;
+    transition: height .7s cubic-bezier(.22,1,.36,1);
+  }
+  .regalo-dentro{ padding-top:18px }
+  .sobrecito{ position:relative; width:112px; height:76px; margin:0 auto 16px }
+  .sc-cuerpo{
+    position:absolute; inset:0;
+    background:#fff;
+    border:1px solid rgba(94,19,34,.3); border-radius:3px;
+  }
+  .sc-boca{
+    position:absolute; left:0; right:0; top:0; height:0;
+    border-left:56px solid transparent; border-right:56px solid transparent;
+    border-top:36px solid rgba(94,19,34,.14);
+  }
+  .sc-frente{
+    position:absolute; left:0; right:0; bottom:0; height:62%;
+    background: linear-gradient(180deg, #fff, #f4f1ea);
+    border:1px solid rgba(94,19,34,.3); border-radius:0 0 3px 3px;
+    clip-path: polygon(0 32%, 50% 0, 100% 32%, 100% 100%, 0 100%);
+    z-index:3;
+  }
+  .sc-sello{
+    position:absolute; left:50%; bottom:28%; width:22px; height:22px; margin-left:-11px;
+    border-radius:50%;
+    background: radial-gradient(56% 56% at 34% 28%, var(--rojo-claro), var(--rojo) 55%, var(--rojo-2));
+    z-index:4; opacity:0; transform:scale(.3);
+  }
+  .jugando .sc-sello{ animation: sellar .5s cubic-bezier(.2,1.4,.4,1) 2.5s both }
+  @keyframes sellar{ to{ opacity:1; transform:scale(1) } }
+
+  .billete{
+    position:absolute; left:50%; top:50%;
+    width:52px; height:26px; margin:-13px 0 0 -26px;
+    border-radius:2px;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,.55) 0 5px, transparent 5.5px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.18) 0 1px, transparent 1px 5px),
+      linear-gradient(160deg, #5f8f6b, #38654a);
+    border:1px solid rgba(255,255,255,.35);
+    box-shadow: 0 2px 5px rgba(0,0,0,.3);
+    opacity:0; z-index:2;
+  }
+  .jugando .billete{ animation: volar 1.5s cubic-bezier(.3,.1,.25,1) both }
+  .b1{ --sx:-150px; --sy:-70px; --sr:-30deg; animation-delay:.1s !important }
+  .b2{ --sx:160px;  --sy:-54px; --sr:26deg;  animation-delay:.45s !important }
+  .b3{ --sx:-130px; --sy:72px;  --sr:18deg;  animation-delay:.8s !important }
+  .b4{ --sx:150px;  --sy:66px;  --sr:-22deg; animation-delay:1.15s !important }
+  @keyframes volar{
+    0%{ opacity:0; transform: translate(var(--sx), var(--sy)) rotate(var(--sr)) scale(.9) }
+    18%{ opacity:1 }
+    62%{ opacity:1; transform: translate(0, -22px) rotate(0) scale(1) }
+    100%{ opacity:1; transform: translate(0, 16px) rotate(0) scale(.96) }
+  }
+  .regalo-texto{
+    opacity:0; transform:translateY(8px);
+    transition: opacity .7s ease 2.7s, transform .7s ease 2.7s;
+  }
+  .jugando .regalo-texto{ opacity:1; transform:none }
+
+  .pie{
+    font-family:var(--f-display); font-size:clamp(9.5px, 2.7vw, 11px); font-weight:400;
+    letter-spacing:.2em; text-transform:uppercase; color:var(--tinta-2);
+    margin:24px 0 0;
+  }
+
+  .cerrar{
+    margin-top:0; background:none; border:0; cursor:pointer;
+    font-family:var(--f-display); font-size:10px; font-weight:500;
+    letter-spacing:.28em; text-transform:uppercase;
+    color:rgba(244,239,226,.55);
+    height:0; padding:0; overflow:hidden;
+    opacity:0; pointer-events:none;
+    transition: opacity .6s ease .7s, color .2s ease;
+  }
+  .desenrollado .cerrar{ opacity:1; pointer-events:auto; height:auto; margin-top:26px; padding:10px 8px }
+  @media (hover: hover){ .cerrar:hover{ color:var(--oro) } }
+  .cerrar:focus-visible{ outline:1px solid var(--oro); outline-offset:4px }
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; transition-delay:0ms !important }
+    .mota{ display:none }
+  }
+</style>
+
+<div id="motas" aria-hidden="true"></div>
+<div class="volador" aria-hidden="true"><span></span></div>
+
+<div class="marco" id="marco">
+
+  <div class="apertura">
+    <p class="ceja">Una invitación para ti</p>
+    <p class="frase">Hay días que una familia espera durante años. Este es uno de ellos.</p>
+    <p class="anfitriona"><b>Deysi Cecilia Hinojosa Guzmán</b><br>te invita a celebrar la graduación de su hija</p>
+    <p class="subfrase">Naomi Shafira</p>
+    <div class="filete"></div>
+  </div>
+
+  <div class="caja-equipo" id="cajaEquipo">
+    <div class="equipo">
+      <div class="tapa">
+        <div class="camara" aria-hidden="true"></div>
+        <div class="pantalla">
+          <div class="barra" aria-hidden="true">
+            <span class="punto r"></span><span class="punto a"></span><span class="punto v"></span>
+            <span>Bandeja de entrada · 1 sin leer</span>
+          </div>
+          <div class="bandeja">
+            <div class="bandeja-tope">
+              <strong>Recibidos</strong>
+              <span class="insignia"><i></i> Nuevo</span>
+            </div>
+            <article class="correo">
+              <div class="remitente">
+                <span class="avatar" aria-hidden="true">DH</span>
+                <div>
+                  <b>Deysi Cecilia Hinojosa Guzmán</b>
+                  <small>para ti y tu familia</small>
+                </div>
+              </div>
+              <h2 class="asunto">Estás invitado a la cena de graduación de Naomi</h2>
+              <p class="vista">Nos encantaría contar contigo esa noche. Adentro están la fecha, la hora y cómo llegar a casa…</p>
+              <span class="adjunto" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M21 12.2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h9"/>
+                  <path d="M3 7l9 6 9-6"/>
+                </svg>
+                invitacion.pdf
+              </span>
+            </article>
+          </div>
+          <div class="cta-zona">
+            <button class="abrir" id="abrir" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 7.5 12 13l8-5.5"/>
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+              </svg>
+              Abrir la invitación
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="base" aria-hidden="true"></div>
+    </div>
+    <p class="pie-equipo">Toca el botón para abrir el correo</p>
+  </div>
+
+  <div class="zona">
+    <span class="birrete" aria-hidden="true">
+      <svg viewBox="0 0 180 118" xmlns="http://www.w3.org/2000/svg">
+        <path d="M66 56 h48 v20 c0 9-11 14-24 14s-24-5-24-14z" fill="#43101c"/>
+        <path d="M66 56 h48 v7 c0 5-11 8-24 8s-24-3-24-8z" fill="#5e1322"/>
+        <path d="M90 26 L170 56 L90 86 L10 56 Z" fill="#43101c"/>
+        <path d="M90 22 L170 52 L90 82 L10 52 Z" fill="#7c1b2d"/>
+        <path d="M90 28 L156 52 L90 76 L24 52 Z" fill="#8f2234"/>
+        <path d="M90 22 L170 52 L90 82 L10 52 Z" fill="none" stroke="#c9a35c" stroke-width="1.4" opacity=".85"/>
+        <circle cx="90" cy="52" r="5.2" fill="#c9a35c"/>
+        <circle cx="90" cy="52" r="2.2" fill="#94702f"/>
+        <path d="M90 52 C 126 50, 152 56, 156 68" stroke="#c9a35c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <g class="borla">
+          <rect x="149" y="66" width="14" height="8" rx="3" fill="#eccf93"/>
+          <path d="M151 74 l-2 22" stroke="#c9a35c" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M154 74 l-1 24" stroke="#b08c42" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M157 74 l1 23" stroke="#eccf93" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M160 74 l2 21" stroke="#c9a35c" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="156" cy="100" r="3" fill="#94702f"/>
+        </g>
+      </svg>
+    </span>
+
+    <div class="rollo" id="rollo">
+      <div class="pergamino" id="pergamino">
+        <p class="de-parte" style="--i:0">Deysi Cecilia Hinojosa Guzmán<br>tiene el gusto de invitarte a la</p>
+        <h1 style="--i:1">Cena de Graduación</h1>
+        <svg class="flor" style="--i:2" viewBox="0 0 200 26" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path class="trazo" d="M8 13 C 46 13, 60 3, 80 13 C 90 18, 96 13, 100 9 C 104 13, 110 18, 120 13 C 140 3, 154 13, 192 13" stroke-linecap="round"/>
+          <circle cx="100" cy="5" r="2"/><circle cx="4" cy="13" r="2"/><circle cx="196" cy="13" r="2"/>
+        </svg>
+        <p class="invita" style="--i:3">de su hija</p>
+        <p class="nombre" style="--i:4">Naomi Shafira<br>Prado Hinojosa</p>
+        <p class="carrera" style="--i:5">Ingeniería de Sistemas</p>
+        <p class="cuerpo-texto" style="--i:6">Después de tantos años de esfuerzo, por fin llegó la noche de celebrar. Nos haría muy felices tenerte con nosotras.</p>
+
+        <dl class="datos" style="--i:7">
+          <div class="dato"><dt>Fecha</dt><dd>Sábado 31 de octubre</dd></div>
+          <div class="dato"><dt>Hora</dt><dd>17:00</dd></div>
+        </dl>
+
+        <section class="bloque" style="--i:8">
+          <svg class="pin" viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 1.4c-5.6 0-10.1 4.4-10.1 9.9C1.9 18.6 12 30.6 12 30.6S22.1 18.6 22.1 11.3c0-5.5-4.5-9.9-10.1-9.9z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="12" cy="11" r="3.4" fill="currentColor"/>
+          </svg>
+          <h2>En nuestra casa</h2>
+          <p>Te esperamos en la puerta. Abrí el mapa y te guía hasta acá.</p>
+          <a class="boton fantasma mapa-boton" id="mapa" href="#" target="_blank" rel="noopener">Cómo llegar</a>
+        </section>
+
+        <section class="bloque" style="--i:9">
+          <button class="boton" id="regaloBoton" type="button">¿No sabés qué regalarme?</button>
+          <div class="regalo-escena" id="regaloEscena">
+            <div class="regalo-dentro" id="regaloDentro">
+              <div class="sobrecito" aria-hidden="true">
+                <span class="sc-cuerpo"></span>
+                <span class="sc-boca"></span>
+                <span class="billete b1"></span>
+                <span class="billete b2"></span>
+                <span class="billete b3"></span>
+                <span class="billete b4"></span>
+                <span class="sc-frente"></span>
+                <span class="sc-sello"></span>
+              </div>
+              <p class="regalo-texto">No es por nada, pero el verde es mi color favorito.</p>
+            </div>
+          </div>
+        </section>
+
+        <div id="zona-confirmar" style="--i:10"></div>
+        <p class="pie" style="--i:11">Confirmá tu asistencia antes del 26 de octubre</p>
+      </div>
+    </div>
+    <button class="cerrar" id="cerrar" type="button">Volver al correo</button>
+  </div>
+</div>
+
+<script>
+  /* ====== EDITÁ SOLO ESTAS LÍNEAS ====== */
+  const INVITACION = {
+    mapa: "https://maps.app.goo.gl/zZpxxFsA6RnGNXAt5",
+    whatsapp: "",   // tu número con código de país, ej. "59170000000" (vacío = sin botón)
+    mensaje: "¡Confirmo mi asistencia a tu cena de graduación! 🎓"
+  };
+  /* ===================================== */
+
+  document.getElementById('mapa').href = INVITACION.mapa;
+
+  if (INVITACION.whatsapp) {
+    const a = document.createElement('a');
+    a.className = 'boton';
+    a.href = 'https://wa.me/' + INVITACION.whatsapp + '?text=' + encodeURIComponent(INVITACION.mensaje);
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = 'Confirmar por WhatsApp';
+    document.getElementById('zona-confirmar').appendChild(a);
+  }
+
+  (function(){
+    const capa = document.getElementById('motas');
+    const cuantas = window.innerWidth < 520 ? 9 : 16;
+    for (let i = 0; i < cuantas; i++) {
+      const m = document.createElement('span');
+      m.className = 'mota';
+      m.style.left = (Math.random() * 100).toFixed(2) + '%';
+      m.style.bottom = (-6 - Math.random() * 20).toFixed(1) + '%';
+      m.style.animationDuration = (16 + Math.random() * 16).toFixed(1) + 's';
+      m.style.animationDelay = (-Math.random() * 20).toFixed(1) + 's';
+      capa.appendChild(m);
+    }
+  })();
+
+  const marco = document.getElementById('marco');
+  const btnAbrir = document.getElementById('abrir');
+  const cajaEquipo = document.getElementById('cajaEquipo');
+  const rollo = document.getElementById('rollo');
+  const pergamino = document.getElementById('pergamino');
+  const btnCerrar = document.getElementById('cerrar');
+  let abierto = false;
+  let altoEquipo = 0;
+  let relojes = [];
+
+  function programar(fn, ms){ relojes.push(setTimeout(fn, ms)); }
+  function limpiarRelojes(){ relojes.forEach(clearTimeout); relojes = []; }
+
+  function alTerminarRollo(e){
+    if (e.target !== rollo || e.propertyName !== 'height') return;
+    rollo.removeEventListener('transitionend', alTerminarRollo);
+    if (abierto) rollo.style.height = 'auto';
+  }
+
+  function abrir(){
+    if (abierto) return;
+    abierto = true;
+    limpiarRelojes();
+    marco.classList.add('abriendo');
+    btnAbrir.disabled = true;
+
+    programar(function(){
+      altoEquipo = cajaEquipo.offsetHeight;
+      cajaEquipo.style.height = altoEquipo + 'px';
+      void cajaEquipo.offsetWidth;
+      marco.classList.add('retirado');
+      cajaEquipo.style.height = '0px';
+    }, 850);
+
+    programar(function(){
+      marco.classList.add('desenrollado');
+      rollo.style.height = pergamino.offsetHeight + 'px';
+      rollo.addEventListener('transitionend', alTerminarRollo);
+    }, 1350);
+
+    programar(function(){ marco.classList.add('coronado'); }, 1850);
+
+    programar(function(){
+      if (typeof rollo.scrollIntoView === 'function') {
+        rollo.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }
+    }, 2900);
+  }
+
+  function cerrar(){
+    if (!abierto) return;
+    abierto = false;
+    limpiarRelojes();
+
+    if (typeof window.scrollTo === 'function') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    rollo.removeEventListener('transitionend', alTerminarRollo);
+    marco.classList.remove('coronado');
+    rollo.style.height = pergamino.offsetHeight + 'px';
+    void rollo.offsetWidth;
+    marco.classList.remove('desenrollado');
+    rollo.style.height = '0px';
+
+    programar(function(){
+      cajaEquipo.style.height = altoEquipo + 'px';
+      marco.classList.remove('retirado');
+    }, 700);
+
+    programar(function(){
+      marco.classList.remove('abriendo');
+      cajaEquipo.style.height = '';
+      btnAbrir.disabled = false;
+      reiniciarRegalo();
+    }, 1300);
+  }
+
+  btnAbrir.addEventListener('click', abrir);
+  btnCerrar.addEventListener('click', cerrar);
+
+  const regaloBoton = document.getElementById('regaloBoton');
+  const regaloEscena = document.getElementById('regaloEscena');
+  const regaloDentro = document.getElementById('regaloDentro');
+  let jugado = false;
+
+  function reiniciarRegalo(){
+    jugado = false;
+    regaloBoton.disabled = false;
+    regaloBoton.style.display = '';
+    regaloEscena.classList.remove('jugando');
+    regaloEscena.style.height = '0px';
+  }
+
+  regaloBoton.addEventListener('click', function(){
+    if (jugado) return;
+    jugado = true;
+    regaloBoton.disabled = true;
+    regaloBoton.style.display = 'none';
+    regaloEscena.style.height = regaloDentro.offsetHeight + 'px';
+    regaloEscena.classList.add('jugando');
+    regaloEscena.addEventListener('transitionend', function alTerminar(e){
+      if (e.target !== regaloEscena || e.propertyName !== 'height') return;
+      regaloEscena.removeEventListener('transitionend', alTerminar);
+      if (jugado) regaloEscena.style.height = 'auto';
+    });
+  });
+
+  if (typeof ResizeObserver === 'function') {
+    new ResizeObserver(function(){
+      if (abierto && rollo.style.height !== 'auto' && rollo.style.height !== '0px') {
+        rollo.style.height = pergamino.offsetHeight + 'px';
+      }
+    }).observe(pergamino);
+  }
+</script>
